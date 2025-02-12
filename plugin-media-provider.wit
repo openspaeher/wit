@@ -1,0 +1,34 @@
+package spaeher:core;
+
+interface media-prototype-emit-events {
+    emit-index-progress-event: func(index-id: string, value: f32);
+}
+
+interface media-provider-plugin-hist {
+    use logging.{log_info, log_warn, log_err};
+    use media-prototype-emit-events.{emit-file-indexed-event};
+}
+
+world media-provider-plugin {
+    import host: media-provider-plugin-host;
+    use plugin-media-provider-records.{root-folder, folder, file, error};
+
+    export add-root-folder: func(path: string) -> result<root-folder, error>;
+    export remove-root-folder: func(root-folder-id: string) -> bool;
+
+    export index-path: func(root-folder-id: string, path: string, index-id: string) -> result<u32, error>;
+
+    export find-file: func(root-index-id: string, path: string) -> result<file, error>;
+    export get-file: func(root-folder-id: string, file-id: string) -> result<file, error>;
+    export find-folder: func(root-folder-id: string, path: string) -> result<folder, error>;
+    export get-folder: func(root-folder-id: string, folder-id: string) -> result<folder, error>;
+
+    export find-files: func(root-folder-id: string, path: string, page: u32, page-size: u32) -> result<list<file>, error>;
+    export get-files: func(root-folder-id: string, folder-id: string, page: u32, page-size: u32) -> result<list<file>, error>;
+    export find-folders: func(root-folder-id: string, path: string, page: u32, page-size: u32) -> result<list<folder>, error>;
+    export get-folders: func(root-folder-id: string, folder-id: string, page: u32, page-size: u32) -> result<list<folder>, error>;
+
+    // TODO functions for preparing the files for transcribers? maybe download / move them to a specific location?
+    // with option for audio only? maybe just return path compatible with ffmpeg?
+    // with media-request-id that is being emitted when they are no longer needed
+}
