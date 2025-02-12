@@ -10,7 +10,7 @@ world media-provider-plugin {
     import plugin-media-provider-emit-events;
 
     export add-root-folder: func(path: string) -> result<root-folder, error>;
-    export remove-root-folder: func(root-folder-id: string) -> bool;
+    export remove-root-folder: func(root-folder-id: string) -> result<_, error>;
 
     export index-path: func(root-folder-id: string, path: string, index-id: string) -> result<u32, error>;
 
