@@ -27,4 +27,7 @@ world media-provider-plugin {
     // TODO functions for preparing the files for transcribers? maybe download / move them to a specific location?
     // with option for audio only? maybe just return path compatible with ffmpeg?
     // with media-request-id that is being emitted when they are no longer needed
+    // also include whether its local
+
+    // TODO function for receiving optional thumbnail?
 }
