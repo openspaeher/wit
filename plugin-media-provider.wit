@@ -1,17 +1,13 @@
 package spaeher:core;
 
-interface media-prototype-emit-events {
+interface plugin-media-provider-emit-events {
     emit-index-progress-event: func(index-id: string, value: f32);
 }
 
-interface media-provider-plugin-hist {
-    use logging.{log_info, log_warn, log_err};
-    use media-prototype-emit-events.{emit-file-indexed-event};
-}
-
 world media-provider-plugin {
-    import host: media-provider-plugin-host;
     use plugin-media-provider-records.{root-folder, folder, file, error};
+    import logging;
+    import plugin-media-provider-emit-events;
 
     export add-root-folder: func(path: string) -> result<root-folder, error>;
     export remove-root-folder: func(root-folder-id: string) -> bool;

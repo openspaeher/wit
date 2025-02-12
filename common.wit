@@ -2,7 +2,6 @@ package spaeher:core;
 
 interface logging {
     log-info: func(value: string);
-    log-warn: func(value: string);
     log-err: func(value: string);
 }
 
@@ -32,6 +31,7 @@ interface plugin-media-provider-records {
         indexed-unix: u64
     }
     variant error {
+        not-implemented,
         path-does-not-exist(string),
         root-folder-does-not-exist(string),
         file-does-not-exist(string),
