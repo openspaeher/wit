@@ -1,18 +1,24 @@
 package spaeher:core;
 
 interface plugin-media-provider-emit-events {
-    emit-index-progress-event: func(index-id: string, value: f32);
+    use jobs.{job-progress};
+    emit-job-progress-event: func(progress: job-progress);
+}
+
+interface plugin-media-provider-receive-events {
+    
 }
 
 world media-provider-plugin {
     use plugin-media-provider-records.{root-folder, folder, file, error};
     import logging;
     import plugin-media-provider-emit-events;
+    export plugin-media-provider-receive-events;
 
     export add-root-folder: func(path: string) -> result<root-folder, error>;
     export remove-root-folder: func(root-folder-id: string) -> result<_, error>;
 
-    export index-path: func(root-folder-id: string, path: string, index-id: string) -> result<u32, error>;
+    export index-path: func(root-folder-id: string, path: string, job-id: string) -> result<u32, error>;
 
     export find-file: func(root-index-id: string, path: string) -> result<file, error>;
     export get-file: func(root-folder-id: string, file-id: string) -> result<file, error>;

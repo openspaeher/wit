@@ -5,6 +5,15 @@ interface logging {
     log-err: func(value: string);
 }
 
+interface jobs {
+    record job-progress {
+        id: string,
+        value: f32,
+        total-children: option<u32>,
+        finished-children: option<u32>
+    }
+}
+
 interface plugin-media-provider-records {
     record root-folder {
         id: string,
