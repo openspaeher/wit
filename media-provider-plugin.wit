@@ -1,19 +1,50 @@
 package spaeher:core;
 
-interface plugin-media-provider-emit-events {
+interface media-provider-plugin-emit-events {
     use jobs.{job-progress};
     emit-job-progress-event: func(progress: job-progress);
 }
 
-interface plugin-media-provider-receive-events {
+interface media-provider-plugin-receive-events {
     
 }
 
 world media-provider-plugin {
-    use plugin-media-provider-records.{root-folder, folder, file, error};
+    record root-folder {
+        id: string,
+        path: string,
+        duration: u32,
+        created-unix:  u64
+    }
+    record folder {
+        id: string,
+        name: string,
+        root-folder-id: string,
+        relative-path: string,
+        relative-depth: u32,
+        duration: u32,
+        indexed-unix: u64
+    }
+    record file {
+        id: string,
+        name: string,
+        root-folder-id: string,
+        relative-path: string,
+        relative-depth: u32,
+        duration:  u32,
+        indexed-unix: u64
+    }
+    variant error {
+        not-implemented,
+        path-does-not-exist(string),
+        root-folder-does-not-exist(string),
+        file-does-not-exist(string),
+        folder-does-not-exist(string)
+    }
+
     import logging;
-    import plugin-media-provider-emit-events;
-    export plugin-media-provider-receive-events;
+    import media-provider-plugin-emit-events;
+    export media-provider-plugin-receive-events;
 
     export add-root-folder: func(path: string) -> result<root-folder, error>;
     export remove-root-folder: func(root-folder-id: string) -> result<_, error>;
