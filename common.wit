@@ -5,11 +5,17 @@ interface logging {
     log-err: func(value: string);
 }
 
-interface jobs {
+interface common {
     record job-progress {
         id: string,
         value: f32,
         total-children: option<u32>,
         finished-children: option<u32>
+    }
+    record root-folder {
+        id: string,
+        path: string,
+        duration: u32,
+        created-unix:  u64
     }
 }
